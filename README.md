@@ -10,7 +10,7 @@
 
 ## Download
 
-[scrcpy-release-v2.1.apk](https://gitlab.com/las2mile/scrcpy-android/raw/master/release/scrcpy-release.apk)
+[scrcpy-release-v2.1.apk](https://github.com/chinmay0900/scrcpy-android/releases/)
 
 
 ## Instructions to use

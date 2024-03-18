@@ -338,9 +338,38 @@ public class MainActivity extends Activity implements Scrcpy.ServiceCallbacks, S
             start_Scrcpy_service();
     }
 
+    protected String TunAddresses() {
+        try {
+            InetAddress ipv4 = null;
+            for (Enumeration<NetworkInterface> en = NetworkInterface
+                    .getNetworkInterfaces(); en.hasMoreElements(); ) {
+                NetworkInterface int_f = en.nextElement();
+                    if (int_f.getName().equals("tun0")){
+                            for (Enumeration<InetAddress> enumIpAddr = int_f.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
+                            InetAddress inetAddress = enumIpAddr.nextElement();
+                            if (inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address) {
+                                ipv4 = inetAddress;
+                                continue;
+                            }
+                            return inetAddress.getHostAddress();
+                        }
+                        if (ipv4 != null) {
+                            return ipv4.getHostAddress();
+                        }
+                        return null;
+                    }
+            }
+        } catch (SocketException ex) {
+            ex.printStackTrace();
+        }
+        return null;
 
+    }
     protected String wifiIpAddress() {
 //https://stackoverflow.com/questions/6064510/how-to-get-ip-address-of-the-device-from-code
+        String a = TunAddresses();
+        if (a != null)
+            return a;
         try {
             InetAddress ipv4 = null;
             InetAddress ipv6 = null;
